@@ -3,21 +3,25 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(91, 28, 34, 0.05);
   transition: all var(--transition-normal);
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-premium);
+  border-color: var(--brand-secondary);
 }
 
 .product-img-container {
   width: 100%;
-  height: 200px;
+  height: 220px;
   background-color: var(--bg-tertiary);
   overflow: hidden;
+  position: relative;
 }
 
 .product-img {
@@ -28,26 +32,91 @@
 }
 
 .product-card:hover .product-img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+
+.product-category-badge {
+  position: absolute;
+  top: var(--spacing-sm);
+  left: var(--spacing-sm);
+  background-color: var(--brand-primary);
+  color: var(--bg-primary);
+  padding: 4px 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-full);
+  z-index: 10;
+  border: 1px solid var(--brand-secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(44, 20, 23, 0.1), rgba(44, 20, 23, 0.4));
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: var(--spacing-sm);
+  z-index: 5;
+}
+
+.product-card:hover .product-card-overlay {
+  opacity: 1;
+}
+
+.wishlist-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--brand-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.wishlist-btn:hover {
+  background: var(--brand-primary);
+  color: var(--bg-primary);
+  transform: scale(1.1);
 }
 
 .product-info {
-  padding: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
 .product-name {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  color: var(--brand-primary);
   margin-bottom: var(--spacing-xs);
+  line-height: 1.2;
 }
 
 .product-desc {
   color: var(--text-secondary);
-  font-size: 0.875rem;
-  margin-bottom: var(--spacing-md);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.5;
   flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-footer {
@@ -55,29 +124,49 @@
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
+  border-top: 1px dashed rgba(91, 28, 34, 0.08);
+  padding-top: var(--spacing-sm);
+}
+
+.price-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
 }
 
 .product-price {
   font-weight: 700;
-  color: var(--brand-secondary);
-  font-size: 1.125rem;
+  color: var(--brand-primary);
+  font-size: 1.15rem;
+  font-family: 'Outfit', sans-serif;
 }
 
 .add-cart-btn {
-  background-color: var(--bg-primary);
-  color: var(--brand-secondary);
-  width: 40px;
-  height: 40px;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
+  color: var(--bg-primary);
+  padding: 8px 16px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   transition: all var(--transition-fast);
-  border: 1px solid rgba(227, 134, 16, 0.2);
+  box-shadow: 0 4px 10px rgba(91, 28, 34, 0.15);
 }
 
 .add-cart-btn:hover {
-  background-color: var(--brand-secondary);
-  color: white;
-  transform: scale(1.1);
+  background: linear-gradient(135deg, var(--brand-secondary) 0%, #B8860B 100%);
+  color: #2C1417;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
 }
