@@ -125,9 +125,17 @@ button {
   padding: 0 var(--spacing-xl);
 }
 
-.text-center { text-align: center; }
-.text-brand { color: var(--brand-secondary); }
-.bg-brand { background-color: var(--brand-primary); }
+.text-center  { text-align: center; }
+.text-right   { text-align: right; }
+.text-brand   { color: var(--brand-secondary); }
+.text-gold    { color: var(--brand-secondary); }
+.text-muted   { color: var(--text-secondary); }
+.text-white   { color: #FFFFFF; }
+.text-success { color: var(--success); }
+.italic       { font-style: italic; }
+.bg-brand     { background-color: var(--brand-primary); }
+.bg-tertiary  { background-color: var(--bg-tertiary); }
+.w-full       { width: 100%; }
 
 /* Layout Utilities */
 .flex { display: flex; }
@@ -139,6 +147,7 @@ button {
 .gap-md { gap: var(--spacing-md); }
 .gap-lg { gap: var(--spacing-lg); }
 .gap-xl { gap: var(--spacing-xl); }
+.ml-2   { margin-left: var(--spacing-sm); }
 
 /* Premium Buttons */
 .btn {
@@ -201,6 +210,11 @@ button {
   color: var(--bg-primary);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.btn-lg {
+  padding: 14px 36px;
+  font-size: 1rem;
 }
 
 .btn-gold {
