@@ -148,6 +148,8 @@ button {
 .gap-lg { gap: var(--spacing-lg); }
 .gap-xl { gap: var(--spacing-xl); }
 .ml-2   { margin-left: var(--spacing-sm); }
+.ml-3   { margin-left: var(--spacing-md); }
+.mr-1   { margin-right: 4px; }
 
 /* Premium Buttons */
 .btn {

@@ -83,10 +83,6 @@
   padding: 12px 32px;
 }
 
-.ml-3 {
-  margin-left: var(--spacing-md);
-}
-
 /* Sections Global */
 .section-subtitle {
   display: block;
@@ -461,8 +457,4 @@
 .event-card p {
   font-size: 0.9rem;
   margin: 0;
-}
-
-.mr-1 {
-  margin-right: 4px;
 }
