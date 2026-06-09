@@ -11,15 +11,26 @@ export const CartProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart  = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+
   useEffect(() => {
     localStorage.setItem('dgs_cart', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isCartOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isCartOpen]);
 
   const addToCart = (product) => {
     setCartItems(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {
-        return prev.map(item => 
+        return prev.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
@@ -33,18 +44,22 @@ export const CartProvider = ({ children }) => {
 
   const updateQuantity = (productId, newQuantity) => {
     if (newQuantity < 1) return;
-    setCartItems(prev => prev.map(item => 
+    setCartItems(prev => prev.map(item =>
       item.id === productId ? { ...item, quantity: newQuantity } : item
     ));
   };
-  
+
   const clearCart = () => setCartItems([]);
 
   const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateQuantity, clearCart, cartTotal, cartCount }}>
+    <CartContext.Provider value={{
+      cartItems, addToCart, removeFromCart, updateQuantity, clearCart,
+      cartTotal, cartCount,
+      isCartOpen, openCart, closeCart,
+    }}>
       {children}
     </CartContext.Provider>
   );

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { products } from '../data/products';
@@ -40,7 +41,15 @@ const Shop = () => {
   }, [activeCategory, searchQuery, sortBy]);
 
   return (
-    <div className="shop-container animate-fade-in container">
+    <>
+      <Helmet>
+        <title>Shop Our Snacks | David Gram Stores</title>
+        <meta
+          name="description"
+          content="Browse the full DGS catalog — hand-roasted peanuts, spicy mixtures, murukkus, and premium sweets. Filter by category and order online."
+        />
+      </Helmet>
+      <div className="shop-container animate-fade-in container">
       {/* Editorial Header */}
       <div className="shop-header text-center">
         <span className="section-subtitle">DGS Catalog</span>
@@ -116,7 +125,8 @@ const Shop = () => {
           </button>
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

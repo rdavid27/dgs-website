@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { MapPin, Phone, Clock, ShieldCheck, Search, Navigation, Compass } from 'lucide-react';
 import './StoreFinder.css';
 
@@ -87,7 +88,15 @@ const StoreFinder = () => {
   );
 
   return (
-    <div className="store-finder-page animate-fade-in">
+    <>
+      <Helmet>
+        <title>Store Finder | David Gram Stores Locations</title>
+        <meta
+          name="description"
+          content="Find David Gram Stores outlets near you. Visit us at Pettah, Galle Face, One Galle Face Mall, and Kandy City Centre for fresh peanuts and snacks."
+        />
+      </Helmet>
+      <div className="store-finder-page animate-fade-in">
       {/* Banner */}
       <div className="store-banner text-center">
         <div className="container">
@@ -249,7 +258,8 @@ const StoreFinder = () => {
 
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

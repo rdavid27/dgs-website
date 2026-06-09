@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Trash2, Plus, Minus, CheckCircle, ShieldCheck, Truck, ClipboardList } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './Checkout.css';
@@ -132,7 +133,15 @@ const Checkout = () => {
   }
 
   return (
-    <div className="container checkout-container animate-fade-in">
+    <>
+      <Helmet>
+        <title>Checkout | David Gram Stores</title>
+        <meta
+          name="description"
+          content="Complete your David Gram Stores order. Fill in your delivery details for fast Cash on Delivery of premium Sri Lankan snacks."
+        />
+      </Helmet>
+      <div className="container checkout-container animate-fade-in">
       <div className="checkout-title-section text-center">
         <span className="section-subtitle">Secure Ordering</span>
         <h1 className="page-title">Gourmet Checkout</h1>
@@ -279,7 +288,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

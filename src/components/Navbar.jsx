@@ -1,24 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingBag, Menu, X, MapPin } from 'lucide-react';
+import { ShoppingBag, Menu, X, MapPin, Sun, Moon } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
-  const { cartCount } = useCart();
+  const { cartCount, openCart } = useCart();
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -43,14 +40,25 @@ const Navbar = () => {
           <Link to="/store-finder" className="store-icon-link" title="Find a Store">
             <MapPin size={20} />
           </Link>
-          
-          <Link to="/checkout" className="cart-btn" title="View Cart">
+
+          {/* Dark Mode Toggle */}
+          <button
+            className="theme-toggle-btn"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+          >
+            {theme === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
+          </button>
+
+          {/* Cart opens drawer */}
+          <button className="cart-btn" onClick={openCart} title="View Cart" aria-label="Open cart">
             <div className="cart-icon-wrapper">
               <ShoppingBag size={22} />
               {cartCount > 0 && <span className="cart-badge animate-bounce-in">{cartCount}</span>}
             </div>
-          </Link>
-          
+          </button>
+
           <button className="mobile-menu-btn" onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
             {isOpen ? <X size={26} /> : <Menu size={26} />}
           </button>

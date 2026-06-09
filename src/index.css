@@ -297,3 +297,49 @@ button {
     font-size: 2.5rem;
   }
 }
+
+/* ============================================================
+   Dark Mode Variables
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-primary:    #1A0809;
+  --bg-secondary:  #220C0E;
+  --bg-tertiary:   #2C1215;
+  --bg-card:       #220C0E;
+
+  --text-primary:   #FAF0ED;
+  --text-secondary: #C4A8A8;
+  --text-light:     #8D6C6C;
+
+  --brand-primary:   #E8606A;
+  --brand-secondary: #D4AF37;
+  --brand-dark:      #C03040;
+  --brand-light:     #3E1014;
+  --brand-glow:      rgba(212, 175, 55, 0.12);
+  --brand-primary-glow: rgba(232, 96, 106, 0.15);
+
+  --accent:       #FF6B6B;
+  --success:      #2FC9B6;
+  --border-color: rgba(232, 96, 106, 0.15);
+
+  --shadow-sm:      0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md:      0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg:      0 16px 32px rgba(0, 0, 0, 0.5);
+  --shadow-premium: 0 24px 48px rgba(0, 0, 0, 0.5);
+  --shadow-gold:    0 8px 24px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================================
+   Accessibility — Focus Visible
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--brand-secondary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Remove default outline when using mouse */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+

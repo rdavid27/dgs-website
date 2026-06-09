@@ -196,3 +196,29 @@
 .animate-bounce-in {
   animation: bounceIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
+
+/* Theme toggle button */
+.theme-toggle-btn {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--brand-secondary);
+  background: var(--brand-glow);
+  transform: rotate(12deg);
+}
+
+/* Dark mode navbar glass effect */
+[data-theme="dark"] .navbar-container.scrolled {
+  background-color: rgba(30, 10, 12, 0.88);
+}
