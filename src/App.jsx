@@ -10,6 +10,7 @@ import About from './pages/About';
 import Shop from './pages/Shop';
 import Checkout from './pages/Checkout';
 import StoreFinder from './pages/StoreFinder';
+import AdminOrders from './pages/AdminOrders';
 import { CartProvider } from './context/CartContext';
 import './App.css';
 
@@ -49,6 +50,7 @@ function App() {
               <Route path="/shop"        element={<PageTransition><Shop /></PageTransition>} />
               <Route path="/store-finder" element={<PageTransition><StoreFinder /></PageTransition>} />
               <Route path="/checkout"    element={<PageTransition><Checkout /></PageTransition>} />
+              <Route path="/admin/orders" element={<PageTransition><AdminOrders /></PageTransition>} />
             </Routes>
           </AnimatePresence>
         </main>

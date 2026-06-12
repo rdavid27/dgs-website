@@ -34,6 +34,7 @@ const Navbar = () => {
           <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>About Us</Link>
           <Link to="/shop" className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`}>Our Products</Link>
           <Link to="/store-finder" className={`nav-link ${location.pathname === '/store-finder' ? 'active' : ''}`}>Store Finder</Link>
+          <Link to="/admin/orders" className={`nav-link ${location.pathname === '/admin/orders' ? 'active' : ''}`}>Admin</Link>
         </nav>
 
         <div className="nav-actions">
@@ -72,6 +73,7 @@ const Navbar = () => {
           <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>About Us</Link>
           <Link to="/shop" className={`nav-link ${location.pathname === '/shop' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>Our Products</Link>
           <Link to="/store-finder" className={`nav-link ${location.pathname === '/store-finder' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>Store Finder</Link>
+          <Link to="/admin/orders" className={`nav-link ${location.pathname === '/admin/orders' ? 'active' : ''}`} onClick={() => setIsOpen(false)}>Admin</Link>
         </nav>
       )}
     </header>

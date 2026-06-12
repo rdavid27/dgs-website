@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Trash2, Plus, Minus, CheckCircle, ShieldCheck, Truck, ClipboardList } from 'lucide-react';
+import { Trash2, Plus, Minus, CheckCircle, ShieldCheck, Truck, ClipboardList, Loader2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { placeOrder } from '../utils/api';
+import toast from 'react-hot-toast';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -26,20 +28,47 @@ const Checkout = () => {
   // Remember cart items before clearing them so we can display them in the receipt
   const [receiptItems, setReceiptItems] = useState([]);
   const [receiptTotal, setReceiptTotal] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // When submitting, capture items to render on success screen
-  const handleOrderSubmit = (e) => {
+  const handleOrderSubmit = async (e) => {
     e.preventDefault();
-    setReceiptItems([...cartItems]);
-    setReceiptTotal(cartTotal);
-    
-    const generatedId = `DGS-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderId(generatedId);
-    
-    setTimeout(() => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
+
+    const orderData = {
+      customerName: formData.name,
+      customerPhone: formData.phone,
+      address: formData.address,
+      city: formData.city,
+      notes: formData.notes,
+      totalAmount: cartTotal,
+      items: cartItems.map(item => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity
+      }))
+    };
+
+    try {
+      const response = await placeOrder(orderData);
+      
+      // Parse items if they returned as JSON string from sqlite database,
+      // but index.js returns fully resolved javascript objects.
+      setReceiptItems(response.items || []);
+      setReceiptTotal(response.totalAmount);
+      setOrderId(response.id);
       setOrderPlaced(true);
       clearCart();
-    }, 600);
+      toast.success('🎉 Gourmet order placed successfully!');
+    } catch (error) {
+      console.error('Failed to submit order:', error);
+      toast.error(error.message || 'Failed to place order. Please check backend connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (orderPlaced) {
@@ -229,8 +258,20 @@ const Checkout = () => {
               <p className="payment-note">Payment is collected in cash upon arrival. No credit card required.</p>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full" style={{ marginTop: '2rem', width: '100%', padding: '14px' }}>
-              Confirm & Place Order - Rs {cartTotal.toFixed(2)}
+            <button 
+              type="submit" 
+              className="btn btn-primary w-full" 
+              style={{ marginTop: '2rem', width: '100%', padding: '14px', display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center' }}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  <span>Placing gourmet order...</span>
+                </>
+              ) : (
+                <span>Confirm & Place Order - Rs {cartTotal.toFixed(2)}</span>
+              )}
             </button>
           </form>
         </div>

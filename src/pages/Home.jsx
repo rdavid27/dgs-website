@@ -1,9 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, Clock, MapPin, Award, CheckCircle } from 'lucide-react';
+import { ArrowRight, Star, Clock, MapPin, Award, CheckCircle, Loader2 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import { fetchProducts } from '../utils/api';
 import './Home.css';
 
 // Shared animation variants
@@ -18,6 +19,20 @@ const staggerContainer = {
 };
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let active = true;
+    fetchProducts().then(data => {
+      if (active) {
+        setProducts(data);
+        setLoading(false);
+      }
+    });
+    return () => { active = false; };
+  }, []);
+
   const featuredProducts = products.slice(0, 4);
 
   return (
@@ -145,17 +160,23 @@ const Home = () => {
                 <ArrowRight size={18} />
               </Link>
             </motion.div>
-            <motion.div
-              className="product-grid"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-            >
-              {featuredProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </motion.div>
+            {loading ? (
+              <div className="flex justify-center items-center" style={{ minHeight: '200px', width: '100%' }}>
+                <Loader2 size={36} className="animate-spin text-gold" />
+              </div>
+            ) : (
+              <motion.div
+                className="product-grid"
+                variants={staggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+              >
+                {featuredProducts.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </motion.div>
+            )}
           </div>
         </section>
 

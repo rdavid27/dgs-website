@@ -1,16 +1,38 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
+import { Search, SlidersHorizontal, ArrowUpDown, Loader2 } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import { fetchProducts } from '../utils/api';
 import './Shop.css';
 
 const categories = ['All', 'David Snacks', 'David Sweets', 'Haldiram\'s', 'Gold Winner Oil'];
 
 const Shop = () => {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');
+
+  useEffect(() => {
+    let active = true;
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        if (active) {
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error('Failed to load products', err);
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    };
+    loadProducts();
+    return () => { active = false; };
+  }, []);
 
   // Filter & sort products using useMemo
   const filteredAndSortedProducts = useMemo(() => {
@@ -38,7 +60,7 @@ const Shop = () => {
     }
 
     return result;
-  }, [activeCategory, searchQuery, sortBy]);
+  }, [products, activeCategory, searchQuery, sortBy]);
 
   return (
     <>
@@ -106,7 +128,11 @@ const Shop = () => {
       </div>
 
       {/* Products Grid */}
-      {filteredAndSortedProducts.length > 0 ? (
+      {loading ? (
+        <div className="flex justify-center items-center" style={{ minHeight: '300px', width: '100%' }}>
+          <Loader2 size={36} className="animate-spin text-gold" />
+        </div>
+      ) : filteredAndSortedProducts.length > 0 ? (
         <div className="shop-grid">
           {filteredAndSortedProducts.map(product => (
             <ProductCard key={product.id} product={product} />
